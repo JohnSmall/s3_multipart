@@ -182,19 +182,19 @@ The S3MP constructor also returns an object that you can interact with. Although
 
 ## Tests
 
-First, create a file `setup_credentials.rb` in the spec folder.
+The a file `setup_credentials.rb` in the spec folder is set to work with bucket and credentials from your environment. So you can either make sure to export the environment variables (recommended) or 
+insert your details here (not recommended because you'll end up commiting that information into GitHub)
 
 ```ruby
 # spec/setup_credentials.rb
 S3Multipart.configure do |config|
-  config.bucket_name   = ''
-  config.s3_access_key = ''
-  config.s3_secret_key = ''
-  config.revision = S3Multipart::Version
+  config.bucket_name   = ENV['TEST_S3_BUCKET']
+  config.s3_access_key = ENV['TEST_AWS_ACCESS_KEY_ID']
+  config.s3_secret_key = ENV['TEST_AWS_SECRET_ACCESS_KEY']
 end
 ```
 
-You can now run all of the RSpec and Capybara tests with `rspec spec`
+You can now run all of the RSpec and Capybara tests with `rspec spec` or just plain `rake` because `rspec spec` is the default rake task
 
 [Combustion](https://github.com/pat/combustion) is also used to simulate a rails application. Paste the following into a `config.ru` file in the base directory:
 
