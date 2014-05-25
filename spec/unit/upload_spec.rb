@@ -9,6 +9,7 @@ describe "An upload object" do
   end
 
   it "should initiate an upload" do
+    VCR.use_cassette('initiate_upload_file') do
     @upload.stub(:unique_name) {'name'}
     response = @upload.initiate( object_name: "example_object.wmv",
                                   content_type: "video/x-ms-wmv" )
@@ -16,6 +17,7 @@ describe "An upload object" do
     response["upload_id"].should be_an_instance_of(String)
     response["key"].should be_an_instance_of(String)
     response["name"].should be_an_instance_of(String)
+    end
   end
 
   it "should sign many parts" do
@@ -37,6 +39,7 @@ describe "An upload object" do
   end
 
   it "should unsuccessfully attempt to complete an upload that doesn't exist" do
+    VCR.use_cassette('fail_complete_upload_file') do
     response = @upload.complete(    object_name: "example_object",
                                    content_length: "1000000",
                                             parts: [{partNum: 1, ETag: "jf93nda3Sf8FSh"}],
@@ -44,5 +47,6 @@ describe "An upload object" do
                                         upload_id: "a83jrhfs94jcj3c3" ) 
 
     response[:error].should eql("Upload does not exist")
+    end
   end
 end
