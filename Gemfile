@@ -4,6 +4,8 @@ group :development do
   gem 'activerecord'
   gem 'actionpack' # action_controller, action_view
   gem 'sprockets'
+  gem 'webmock'
+  gem 'vcr'
 
   # assets
   gem 'sass-rails',   '~> 3.2.3'
