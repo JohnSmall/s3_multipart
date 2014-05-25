@@ -196,6 +196,8 @@ end
 
 You can now run all of the RSpec and Capybara tests with `rspec spec` or just plain `rake` because `rspec spec` is the default rake task
 
+The test suite uses the vcr and webmock gems when making remote HTTP requests. That means it will access AWS once, record the result in the vcr_cassettes directory, and use that result for future tests. That makes the tests run faster and work without a network connection.
+
 [Combustion](https://github.com/pat/combustion) is also used to simulate a rails application. Paste the following into a `config.ru` file in the base directory:
 
 ```ruby
